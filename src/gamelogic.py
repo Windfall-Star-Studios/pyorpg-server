@@ -148,66 +148,66 @@ def playerMove(index, direction, movement):
     setPlayerDir(index, direction)
 
     if direction == DIR_UP:
-        if getPlayerY(index) > 0:
+        if int(getPlayerY(index)) > 0:
             # TODO: Check if tilemap thing
-            if Map[getPlayerMap(index)].tile[getPlayerX(index)][getPlayerY(index)-1].type != TILE_TYPE_BLOCKED:
-                setPlayerY(index, getPlayerY(index) - 1)
+            if Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))][int(getPlayerY(index))-1].type != TILE_TYPE_BLOCKED:
+                setPlayerY(index, int(getPlayerY(index)) - 1)
 
-                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": getPlayerX(index), "y": getPlayerY(index), "direction": getPlayerDir(index), "moving": movement}])
+                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": int(getPlayerX(index)), "y": int(getPlayerY(index)), "direction": getPlayerDir(index), "moving": movement}])
                 g.conn.sendDataToAllBut(index, packet)
                 moved = True
         else:
-            if Map[getPlayerMap(index)].up > 0:
-                playerWarp(index, Map[getPlayerMap(index)].up, getPlayerX(index), MAX_MAPY - 1)  # todo, dont use -1
+            if Map[int(getPlayerMap(index))].up > 0:
+                playerWarp(index, Map[int(getPlayerMap(index))].up, int(getPlayerX(index)), MAX_MAPY - 1)  # todo, dont use -1
                 moved = True
 
     elif direction == DIR_DOWN:
-        if getPlayerY(index) < MAX_MAPY-1:
-            if Map[getPlayerMap(index)].tile[getPlayerX(index)][getPlayerY(index)+1].type != TILE_TYPE_BLOCKED:
-                setPlayerY(index, getPlayerY(index) + 1)
+        if int(getPlayerY(index)) < MAX_MAPY-1:
+            if Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))][int(getPlayerY(index))+1].type != TILE_TYPE_BLOCKED:
+                setPlayerY(index, int(getPlayerY(index)) + 1)
 
-                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": getPlayerX(index), "y": getPlayerY(index), "direction": getPlayerDir(index), "moving": movement}])
+                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": int(getPlayerX(index)), "y": int(getPlayerY(index)), "direction": getPlayerDir(index), "moving": movement}])
                 g.conn.sendDataToAllBut(index, packet)
                 moved = True
 
         else:
-            if Map[getPlayerMap(index)].down > 0:
-                playerWarp(index, Map[getPlayerMap(index)].down, getPlayerX(index), 0)
+            if Map[int(getPlayerMap(index))].down > 0:
+                playerWarp(index, Map[int(getPlayerMap(index))].down, int(getPlayerX(index)), 0)
                 moved = True
 
     elif direction == DIR_LEFT:
-        if getPlayerX(index) > 0:
-            if Map[getPlayerMap(index)].tile[getPlayerX(index)-1][getPlayerY(index)].type != TILE_TYPE_BLOCKED:
-                setPlayerX(index, getPlayerX(index) - 1)
+        if int(getPlayerX(index)) > 0:
+            if Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))-1][int(getPlayerY(index))].type != TILE_TYPE_BLOCKED:
+                setPlayerX(index, int(getPlayerX(index)) - 1)
 
-                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": getPlayerX(index), "y": getPlayerY(index), "direction": getPlayerDir(index), "moving": movement}])
+                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": int(getPlayerX(index)), "y": int(getPlayerY(index)), "direction": getPlayerDir(index), "moving": movement}])
                 g.conn.sendDataToAllBut(index, packet)
                 moved = True
 
         else:
-            if Map[getPlayerMap(index)].left > 0:
-                playerWarp(index, Map[getPlayerMap(index)].left, MAX_MAPX-1, getPlayerY(index)) # todo, dont use -1
+            if Map[int(getPlayerMap(index))].left > 0:
+                playerWarp(index, Map[int(getPlayerMap(index))].left, MAX_MAPX-1, int(getPlayerY(index))) # todo, dont use -1
                 moved = True
 
     elif direction == DIR_RIGHT:
-        if getPlayerX(index) < MAX_MAPX-1:
-            if Map[getPlayerMap(index)].tile[getPlayerX(index)+1][getPlayerY(index)].type != TILE_TYPE_BLOCKED:
-                setPlayerX(index, getPlayerX(index) + 1)
+        if int(getPlayerX(index)) < MAX_MAPX-1:
+            if Map[int(getPlayerMap(index))].tile[int(int(getPlayerX(index)))+1][int(int(getPlayerY(index)))].type != TILE_TYPE_BLOCKED:
+                setPlayerX(index, int(getPlayerX(index)) + 1)
 
-                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": getPlayerX(index), "y": getPlayerY(index), "direction": getPlayerDir(index), "moving": movement}])
+                packet = json.dumps([{"packet": ServerPackets.SPlayerMove, "index": index, "x": int(getPlayerX(index)), "y": int(getPlayerY(index)), "direction": getPlayerDir(index), "moving": movement}])
                 g.conn.sendDataToAllBut(index, packet)
                 moved = True
 
         else:
-            if Map[getPlayerMap(index)].right > 0:
-                playerWarp(index, Map[getPlayerMap(index)].right, 0, getPlayerY(index)) # todo, dont use -1
+            if Map[int(getPlayerMap(index))].right > 0:
+                playerWarp(index, Map[int(getPlayerMap(index))].right, 0, int(getPlayerY(index))) # todo, dont use -1
                 moved = True
 
     # check to see if the tile is a warp tile, and if so warp them
-    if Map[getPlayerMap(index)].tile[getPlayerX(index)][getPlayerY(index)].type == TILE_TYPE_WARP:
-        mapNum = int(Map[getPlayerMap(index)].tile[getPlayerX(index)][getPlayerY(index)].data1)
-        x      = int(Map[getPlayerMap(index)].tile[getPlayerX(index)][getPlayerY(index)].data2)
-        y      = int(Map[getPlayerMap(index)].tile[getPlayerX(index)][getPlayerY(index)].data3)
+    if Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))][int(getPlayerY(index))].type == TILE_TYPE_WARP:
+        mapNum = int(Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))][int(getPlayerY(index))].data1)
+        x      = int(Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))][int(getPlayerY(index))].data2)
+        y      = int(Map[int(getPlayerMap(index))].tile[int(getPlayerX(index))][int(getPlayerY(index))].data3)
 
         playerWarp(index, mapNum, x, y)
         moved = True
@@ -314,7 +314,7 @@ def castSpell(index, spellSlot):
 
         if n is not None:
             giveItem(index, Spell[spellNum].data1, Spell[spellNum].data2)
-            mapMsg(getPlayerMap(index), getPlayerMap(index) + ' casts ' + Spell[spellNum].name + '.', textColor.BRIGHT_BLUE)
+            mapMsg(int(getPlayerMap(index)), int(getPlayerMap(index)) + ' casts ' + Spell[spellNum].name + '.', textColor.BRIGHT_BLUE)
 
             # take mana points
             setPlayerVital(index, Vitals.mp, getPlayerVital(index, Vitals.mp) - reqMp)
@@ -335,10 +335,10 @@ def castSpell(index, spellSlot):
         if isPlaying(n):
 
             if getPlayerVital(index, Vitals.hp) > 0:
-                if getPlayerMap(index) == getPlayerMap(n):
+                if int(getPlayerMap(index)) == getPlayerMap(n):
                     # check player level?
 
-                    if Map[getPlayerMap(index)].moral == MAP_MORAL_NONE:
+                    if Map[int(getPlayerMap(index))].moral == MAP_MORAL_NONE:
                         if getPlayerAccess(index) <= 0:
                             if getPlayerAccess(n) <= 0:
                                 if n != index:
@@ -370,7 +370,7 @@ def castSpell(index, spellSlot):
 
             elif Spell[spellNum].type == SPELL_TYPE_ADDHP or Spell[spellNum].type == SPELL_TYPE_ADDMP or Spell[spellNum].type == SPELL_TYPE_ADDSP:
                 
-                if getPlayerMap(index) == getPlayerMap(n):
+                if int(getPlayerMap(index)) == getPlayerMap(n):
                     canCast = True
 
                 if canCast:
@@ -389,17 +389,17 @@ def castSpell(index, spellSlot):
                     casted = True
 
     elif targetType == TARGET_TYPE_NPC:
-        if NPC[mapNPC[getPlayerMap(index)][n].num].behaviour != NPC_BEHAVIOUR_FRIENDLY and NPC[mapNPC[getPlayerMap(index)][n].num].behaviour != NPC_BEHAVIOUR_SHOPKEEPER:
+        if NPC[mapNPC[int(getPlayerMap(index))][n].num].behaviour != NPC_BEHAVIOUR_FRIENDLY and NPC[mapNPC[int(getPlayerMap(index))][n].num].behaviour != NPC_BEHAVIOUR_SHOPKEEPER:
             canCast = True
 
-        targetName = NPC[mapNPC[getPlayerMap(index)][n].num].name
+        targetName = NPC[mapNPC[int(getPlayerMap(index))][n].num].name
 
         if canCast:
             if Spell[spellNum].type == SPELL_TYPE_ADDHP:
-                mapNPC[getPlayerMap(index)][n].vital[Vitals.hp] += Spell[spellNum].data1
+                mapNPC[int(getPlayerMap(index))][n].vital[Vitals.hp] += Spell[spellNum].data1
 
             elif Spell[spellNum].type == SPELL_TYPE_SUBHP:
-                damage = (getPlayerStat(index, Stats.magic) // 4) + Spell[spellNum].data1 - (NPC[mapNPC[getPlayerMap(index)][n].num].stat[Stats.defense] // 2)
+                damage = (getPlayerStat(index, Stats.magic) // 4) + Spell[spellNum].data1 - (NPC[mapNPC[int(getPlayerMap(index))][n].num].stat[Stats.defense] // 2)
 
                 if damage > 0:
                     attackNpc(index, n, damage)
@@ -408,23 +408,23 @@ def castSpell(index, spellSlot):
                     playerMsg(index, 'The spell was too weak to hurt ' + targetName + '!', textColor.BRIGHT_RED)
 
             elif Spell[spellNum].type == SPELL_TYPE_ADDMP:
-                mapNPC[getPlayerMap(index)][n].vital[Vitals.mp] += Spell[spellNum].data1
+                mapNPC[int(getPlayerMap(index))][n].vital[Vitals.mp] += Spell[spellNum].data1
 
             elif Spell[spellNum].type == SPELL_TYPE_SUBMP:
-                mapNPC[getPlayerMap(index)][n].vital[Vitals.mp] -= Spell[spellNum].data1
+                mapNPC[int(getPlayerMap(index))][n].vital[Vitals.mp] -= Spell[spellNum].data1
 
             elif Spell[spellNum].type == SPELL_TYPE_ADDSP:
-                mapNPC[getPlayerMap(index)][n].vital[Vitals.sp] += Spell[spellNum].data1
+                mapNPC[int(getPlayerMap(index))][n].vital[Vitals.sp] += Spell[spellNum].data1
 
             elif Spell[spellNum].type == SPELL_TYPE_SUBSP:
-                mapNPC[getPlayerMap(index)][n].vital[Vitals.sp] -= Spell[spellNum].data1
+                mapNPC[int(getPlayerMap(index))][n].vital[Vitals.sp] -= Spell[spellNum].data1
 
             casted = True
 
     if casted:
-        mapMsg(getPlayerMap(index), getPlayerName(index) + ' casts ' + Spell[spellNum].name + ' on ' + targetName + '.', textColor.BRIGHT_BLUE)
+        mapMsg(int(getPlayerMap(index)), getPlayerName(index) + ' casts ' + Spell[spellNum].name + ' on ' + targetName + '.', textColor.BRIGHT_BLUE)
         packet = json.dumps([{"packet": ServerPackets.SCastSpell, "targettype": targetType, "target": n, "spellnum": spellNum}])
-        g.conn.sendDataToMap(getPlayerMap(index), packet)
+        g.conn.sendDataToMap(int(getPlayerMap(index)), packet)
 
         # take away mana points
         setPlayerVital(index, Vitals.mp, getPlayerVital(index, Vitals.mp) - reqMp)
@@ -446,7 +446,7 @@ def playerWarp(index, mapNum, x, y):
     # check for shop on the map player is leaving and if so say goodbye
 
     # erase play data to map
-    oldMap = getPlayerMap(index)
+    oldMap = int(getPlayerMap(index))
 
     if oldMap != mapNum:
         sendLeaveMap(index, oldMap)
@@ -503,7 +503,7 @@ def joinGame(index):
     sendLevel(index)
 
     # warp player to saved location
-    playerWarp(index, getPlayerMap(index), getPlayerX(index), getPlayerY(index))
+    playerWarp(index, int(getPlayerMap(index)), int(getPlayerX(index)), int(getPlayerY(index)))
 
     # send welcome messages (todo)
     sendWelcome(index)
@@ -517,8 +517,8 @@ def leftGame(index):
     if TempPlayer[index].inGame:
         TempPlayer[index].inGame = False
 
-        if getTotalMapPlayers(getPlayerMap(index)) < 1:
-            playersOnMap[getPlayerMap(index)] = False
+        if getTotalMapPlayers(int(getPlayerMap(index))) < 1:
+            playersOnMap[int(getPlayerMap(index))] = False
 
         savePlayer(index)
 
@@ -883,7 +883,7 @@ def attackNpc(attacker, mapNpcNum, damage):
 
         else:
             # player is in party
-            print 'player is in party, todo'
+            print ('player is in party, todo')
 
         # drop loot if they have it
         n = random.randint(1, NPC[npcNum].dropChance)
@@ -946,11 +946,11 @@ def canNpcAttackPlayer(mapNpcNum, index):
     if mapNpcNum < 0 or mapNpcNum > MAX_MAP_NPCS or not isPlaying(index):
         return
 
-    if mapNPC[getPlayerMap(index)][mapNpcNum].num is None:
+    if mapNPC[int(getPlayerMap(index))][mapNpcNum].num is None:
         return
 
-    mapNum = getPlayerMap(index)
-    npcNum = mapNPC[getPlayerMap(index)][mapNpcNum].num
+    mapNum = int(getPlayerMap(index))
+    npcNum = mapNPC[int(getPlayerMap(index))][mapNpcNum].num
 
     # make sure npc isnt already dead
     if mapNPC[mapNum][mapNpcNum].vital[Vitals.hp] <= 0:
@@ -972,16 +972,16 @@ def canNpcAttackPlayer(mapNpcNum, index):
     if isPlaying(index):
         if npcNum is not None:
             # check if at same coordinates
-            if getPlayerY(index) + 1 == mapNPC[mapNum][mapNpcNum].y and getPlayerX(index) == mapNPC[mapNum][mapNpcNum].x:
+            if int(getPlayerY(index)) + 1 == mapNPC[mapNum][mapNpcNum].y and int(getPlayerX(index)) == mapNPC[mapNum][mapNpcNum].x:
                 return True
 
-            elif getPlayerY(index) - 1 == mapNPC[mapNum][mapNpcNum].y and getPlayerX(index) == mapNPC[mapNum][mapNpcNum].x:
+            elif int(getPlayerY(index)) - 1 == mapNPC[mapNum][mapNpcNum].y and int(getPlayerX(index)) == mapNPC[mapNum][mapNpcNum].x:
                 return True
 
-            elif getPlayerY(index) == mapNPC[mapNum][mapNpcNum].y and getPlayerX(index) + 1 == mapNPC[mapNum][mapNpcNum].x:
+            elif int(getPlayerY(index)) == mapNPC[mapNum][mapNpcNum].y and int(getPlayerX(index)) + 1 == mapNPC[mapNum][mapNpcNum].x:
                 return True
 
-            elif getPlayerY(index) == mapNPC[mapNum][mapNpcNum].y and getPlayerX(index) - 1 == mapNPC[mapNum][mapNpcNum].x:
+            elif int(getPlayerY(index)) == mapNPC[mapNum][mapNpcNum].y and int(getPlayerX(index)) - 1 == mapNPC[mapNum][mapNpcNum].x:
                 return True
 
 def npcAttackPlayer(mapNpcNum, victim, damage):
@@ -1234,13 +1234,13 @@ def playerMapGetItem(index):
     if not isPlaying(index):
         return
 
-    mapNum = getPlayerMap(index)
+    mapNum = int(getPlayerMap(index))
 
     for i in range(MAX_MAP_ITEMS):
         # see if theres an item here
-        if mapItem[mapNum][i].num <= MAX_ITEMS:
+        if int(0 if mapItem[mapNum][i].num == None else mapItem[mapNum][i].num) <= MAX_ITEMS:
             # check if item is at same location as the player
-            if mapItem[mapNum][i].x == getPlayerX(index) and mapItem[mapNum][i].y == getPlayerY(index):
+            if mapItem[mapNum][i].x == int(getPlayerX(index)) and mapItem[mapNum][i].y == int(getPlayerY(index)):
                 # find open slot
                 n = findOpenInvSlot(index, mapItem[mapNum][i].num)
 
@@ -1268,7 +1268,7 @@ def playerMapGetItem(index):
                     mapItem[mapNum][i].y = None
 
                     sendInventoryUpdate(index, n)
-                    spawnItemSlot(i, None, None, None, getPlayerMap(index), None, None)
+                    spawnItemSlot(i, None, None, None, int(getPlayerMap(index)), None, None)
                     playerMsg(index, msg, textColor.YELLOW)
                     break
 
@@ -1282,10 +1282,10 @@ def playerMapDropItem(index, invNum, amount):
 
     if getPlayerInvItemNum(index, invNum) is not None:
         if getPlayerInvItemNum(index, invNum) <= MAX_ITEMS:
-            i = findOpenMapItemSlot(getPlayerMap(index))
+            i = findOpenMapItemSlot(int(getPlayerMap(index)))
 
             if i is not None:
-                mapItem[getPlayerMap(index)][i].dur = 0
+                mapItem[int(getPlayerMap(index))][i].dur = 0
 
                 # check if its any sort of armor or weapon
                 itemType = Item[getPlayerInvItemNum(index, invNum)].type
@@ -1295,54 +1295,54 @@ def playerMapDropItem(index, invNum, amount):
                         setPlayerEquipmentSlot(index, 0, Equipment.armor)
                         sendWornEquipment(index)
 
-                    mapItem[getPlayerMap(index)][i].dur = getPlayerInvItemDur(index, invNum)
+                    mapItem[int(getPlayerMap(index))][i].dur = getPlayerInvItemDur(index, invNum)
 
                 elif itemType == ITEM_TYPE_WEAPON:
                     if invNum == getPlayerEquipmentSlot(index, Equipment.weapon):
                         setPlayerEquipmentSlot(index, 0, Equipment.weapon)
                         sendWornEquipment(index)
 
-                    mapItem[getPlayerMap(index)][i].dur = getPlayerInvItemDur(index, invNum)
+                    mapItem[int(getPlayerMap(index))][i].dur = getPlayerInvItemDur(index, invNum)
 
                 elif itemType == ITEM_TYPE_HELMET:
                     if invNum == getPlayerEquipmentSlot(index, Equipment.helmet):
                         setPlayerEquipmentSlot(index, 0, Equipment.helmet)
                         sendWornEquipment(index)
 
-                    mapItem[getPlayerMap(index)][i].dur = getPlayerInvItemDur(index, invNum)
+                    mapItem[int(getPlayerMap(index))][i].dur = getPlayerInvItemDur(index, invNum)
 
                 elif itemType == ITEM_TYPE_SHIELD:
                     if invNum == getPlayerEquipmentSlot(index, Equipment.shield):
                         setPlayerEquipmentSlot(index, 0, Equipment.shield)
                         sendWornEquipment(index)
 
-                    mapItem[getPlayerMap(index)][i].dur = getPlayerInvItemDur(index, invNum)
+                    mapItem[int(getPlayerMap(index))][i].dur = getPlayerInvItemDur(index, invNum)
 
-                mapItem[getPlayerMap(index)][i].num = getPlayerInvItemNum(index, invNum)
-                mapItem[getPlayerMap(index)][i].x = getPlayerX(index)
-                mapItem[getPlayerMap(index)][i].y = getPlayerY(index)
+                mapItem[int(getPlayerMap(index))][i].num = getPlayerInvItemNum(index, invNum)
+                mapItem[int(getPlayerMap(index))][i].x = int(getPlayerX(index))
+                mapItem[int(getPlayerMap(index))][i].y = int(getPlayerY(index))
 
                 if itemType == ITEM_TYPE_CURRENCY:
                     # check if its more than they have, and if so drop it
                     if amount >= getPlayerInvItemValue(index, invNum):
-                        mapItem[getPlayerMap(index)][i].value = getPlayerInvItemValue(index, invNum)
+                        mapItem[int(getPlayerMap(index))][i].value = getPlayerInvItemValue(index, invNum)
                         
-                        mapMsg(getPlayerMap(index), getPlayerName(index) + ' drops ' + str(getPlayerInvItemValue(index, invNum)) + ' ' + Item[getPlayerInvItemNum(index, invNum)].name + '.', textColor.YELLOW)
+                        mapMsg(int(getPlayerMap(index)), getPlayerName(index) + ' drops ' + str(getPlayerInvItemValue(index, invNum)) + ' ' + Item[getPlayerInvItemNum(index, invNum)].name + '.', textColor.YELLOW)
 
                         setPlayerInvItemNum(index, invNum, None)
                         setPlayerInvItemValue(index, invNum, 0)
                         setPlayerInvItemDur(index, invNum, 0)
 
                     else:
-                        mapItem[getPlayerMap(index)][i].value = amount
+                        mapItem[int(getPlayerMap(index))][i].value = amount
 
-                        mapMsg(getPlayerMap(index), getPlayerName(index) + ' drops ' + str(amount) + ' ' + Item[getPlayerInvItemNum(index, invNum)].name + '.', textColor.YELLOW)
+                        mapMsg(int(getPlayerMap(index)), getPlayerName(index) + ' drops ' + str(amount) + ' ' + Item[getPlayerInvItemNum(index, invNum)].name + '.', textColor.YELLOW)
 
                         setPlayerInvItemValue(index, invNum, getPlayerInvItemValue(index, invNum) - amount)
 
                 else:
                     # its not a currency
-                    mapItem[getPlayerMap(index)][i].value = 0
+                    mapItem[int(getPlayerMap(index))][i].value = 0
 
                     # msg todo
 
@@ -1354,7 +1354,7 @@ def playerMapDropItem(index, invNum, amount):
                 sendInventoryUpdate(index, invNum)
 
                 # spawn item
-                spawnItemSlot(i, mapItem[getPlayerMap(index)][i].num, amount, mapItem[getPlayerMap(index)][i].dur, getPlayerMap(index), getPlayerX(index), getPlayerY(index))
+                spawnItemSlot(i, mapItem[int(getPlayerMap(index))][i].num, amount, mapItem[int(getPlayerMap(index))][i].dur, int(getPlayerMap(index)), int(getPlayerX(index)), int(getPlayerY(index)))
 
             else:
                 playerMsg(index, 'Too many items already on the ground.', textColor.BRIGHT_RED)
@@ -1615,13 +1615,13 @@ def sendJoinMap(index):
     # send data of all players (on current map) to index
     for i in range(0, g.totalPlayersOnline):
         if g.playersOnline[i] != index:
-            if getPlayerMap(g.playersOnline[i]) == getPlayerMap(index):
+            if getPlayerMap(g.playersOnline[i]) == int(getPlayerMap(index)):
                 packet = json.dumps([{"packet": ServerPackets.SPlayerData, "index": g.playersOnline[i], "name": getPlayerName(g.playersOnline[i]), "access": getPlayerAccess(g.playersOnline[i]), "sprite": getPlayerSprite(g.playersOnline[i]), "map": getPlayerMap(g.playersOnline[i]), "x": getPlayerX(g.playersOnline[i]), "y": getPlayerY(g.playersOnline[i]), "direction": getPlayerDir(g.playersOnline[i])}])
                 g.conn.sendDataTo(index, packet)
 
     # send index's data to all players including himself
-    packet = json.dumps([{"packet": ServerPackets.SPlayerData, "index": index, "name": getPlayerName(index),  "access": getPlayerAccess(index), "sprite": getPlayerSprite(index), "map": getPlayerMap(index), "x": getPlayerX(index), "y": getPlayerY(index), "direction": getPlayerDir(index)}])
-    g.conn.sendDataToMap(getPlayerMap(index), packet)
+    packet = json.dumps([{"packet": ServerPackets.SPlayerData, "index": index, "name": getPlayerName(index),  "access": getPlayerAccess(index), "sprite": getPlayerSprite(index), "map": int(getPlayerMap(index)), "x": int(getPlayerX(index)), "y": int(getPlayerY(index)), "direction": getPlayerDir(index)}])
+    g.conn.sendDataToMap(int(getPlayerMap(index)), packet)
 
 def sendVital(index, vital):
     if vital == 0:   #hp
@@ -1692,8 +1692,8 @@ def sendLeaveMap(index, mapNum):
 
 
 def sendPlayerData(index):
-    packet = json.dumps([{"packet": ServerPackets.SPlayerData, "index": index, "name": getPlayerName(index), "access": getPlayerAccess(index), "sprite": getPlayerSprite(index), "map": getPlayerMap(index), "x": getPlayerX(index), "y": getPlayerY(index), "direction": getPlayerDir(index)}])
-    g.conn.sendDataToMap(getPlayerMap(index), packet)
+    packet = json.dumps([{"packet": ServerPackets.SPlayerData, "index": index, "name": getPlayerName(index), "access": getPlayerAccess(index), "sprite": getPlayerSprite(index), "map": int(getPlayerMap(index)), "x": int(getPlayerX(index)), "y": int(getPlayerY(index)), "direction": getPlayerDir(index)}])
+    g.conn.sendDataToMap(int(getPlayerMap(index)), packet)
 
 
 def sendMap(index, mapNum):
@@ -1811,7 +1811,7 @@ def sendLeftGame(index):
     g.conn.sendDataToAllBut(index, packet)
 
 def sendPlayerXY(index):
-    packet = json.dumps([{'packet': ServerPackets.SPlayerXY, 'x': getPlayerX(index), 'y': getPlayerY(index)}])
+    packet = json.dumps([{'packet': ServerPackets.SPlayerXY, 'x': int(getPlayerX(index)), 'y': int(getPlayerY(index))}])
     g.conn.sendDataTo(index, packet)
 
 def sendUpdateItemToAll(itemNum):
